@@ -1,9 +1,9 @@
 using UnityEngine;
-using System.Collections;
-using UnityEngine.Serialization;
 
-public class SimpleFSM : FSM {
-    public enum FSMState {
+public class SimpleFSM : FSM
+{
+    public enum FSMState
+    {
         None,
         Patrol,
         Chase,
@@ -55,7 +55,8 @@ public class SimpleFSM : FSM {
 
 
     //Initialize the Finite state machine for the NPC tank
-    protected override void Initialize() {
+    protected override void Initialize()
+    {
 
         //Get the list of points
         pointList = GameObject.FindGameObjectsWithTag("WandarPoint");
@@ -76,8 +77,10 @@ public class SimpleFSM : FSM {
     }
 
     //Update each frame
-    protected override void FSMUpdate() {
-        switch (curState) {
+    protected override void FSMUpdate()
+    {
+        switch (curState)
+        {
             case FSMState.Patrol:
                 UpdatePatrolState();
                 break;
@@ -103,15 +106,18 @@ public class SimpleFSM : FSM {
     /// <summary>
     /// Patrol state
     /// </summary>
-    protected void UpdatePatrolState() {
+    protected void UpdatePatrolState()
+    {
         //Find another random patrol point if the current point is reached
-        if (Vector3.Distance(transform.position, destPos) <= patrollingRadius) {
+        if (Vector3.Distance(transform.position, destPos) <= patrollingRadius)
+        {
             print("Reached the destination point\ncalculating the next point");
             FindNextPoint();
         }
         //Check the distance with player tank
         //When the distance is near, transition to chase state
-        else if (Vector3.Distance(transform.position, playerTransform.position) <= playerNearRadius) {
+        else if (Vector3.Distance(transform.position, playerTransform.position) <= playerNearRadius)
+        {
             print("Switch to Chase Position");
             curState = FSMState.Chase;
         }
@@ -127,18 +133,21 @@ public class SimpleFSM : FSM {
     /// <summary>
     /// Chase state
     /// </summary>
-    protected void UpdateChaseState() {
+    protected void UpdateChaseState()
+    {
         //Set the target position as the player position
         destPos = playerTransform.position;
 
         //Check the distance with player tank
         //When the distance is near, transition to attack state
         float dist = Vector3.Distance(transform.position, playerTransform.position);
-        if (dist <= attackRadius) {
+        if (dist <= attackRadius)
+        {
             curState = FSMState.Attack;
         }
         //Go back to patrol is it become too far
-        else if (dist >= playerNearRadius) {
+        else if (dist >= playerNearRadius)
+        {
             curState = FSMState.Patrol;
         }
 
@@ -149,7 +158,8 @@ public class SimpleFSM : FSM {
     /// <summary>
     /// Attack state
     /// </summary>
-    protected void UpdateAttackState() {
+    protected void UpdateAttackState()
+    {
         //Set the target position as the player position
         destPos = playerTransform.position;
 
@@ -157,7 +167,8 @@ public class SimpleFSM : FSM {
 
         //Check the distance with the player tank
         float dist = Vector3.Distance(transform.position, playerTransform.position);
-        if (dist >= attackRadius && dist < playerNearRadius) {
+        if (dist >= attackRadius && dist < playerNearRadius)
+        {
             // Rotate target point
             // The rotation is only around the vertical axis of the tank.
             Quaternion targetRotation = Quaternion.FromToRotation(frontVector, destPos - transform.position);
@@ -169,7 +180,8 @@ public class SimpleFSM : FSM {
             curState = FSMState.Attack;
         }
         //Transition to patrol is the tank become too far
-        else if (dist >= playerNearRadius) {
+        else if (dist >= playerNearRadius)
+        {
             curState = FSMState.Patrol;
         }
 
@@ -178,7 +190,8 @@ public class SimpleFSM : FSM {
         turret.rotation = Quaternion.Slerp(turret.rotation, turretRotation, Time.deltaTime * curRotSpeed);
 
         //Shoot the bullets
-        if (Mathf.Abs(Quaternion.Dot(turretRotation, turret.rotation)) > 1.0f - maxFireAimError) {
+        if (Mathf.Abs(Quaternion.Dot(turretRotation, turret.rotation)) > 1.0f - maxFireAimError)
+        {
             ShootBullet();
         }
     }
@@ -186,9 +199,11 @@ public class SimpleFSM : FSM {
     /// <summary>
     /// Dead state
     /// </summary>
-    protected void UpdateDeadState() {
+    protected void UpdateDeadState()
+    {
         //Show the dead animation with some physics effects
-        if (!bDead) {
+        if (!bDead)
+        {
             bDead = true;
             Explode();
         }
@@ -197,8 +212,10 @@ public class SimpleFSM : FSM {
     /// <summary>
     /// Shoot the bullet from the turret
     /// </summary>
-    private void ShootBullet() {
-        if (elapsedTime >= shootRate) {
+    private void ShootBullet()
+    {
+        if (elapsedTime >= shootRate)
+        {
             //Shoot the bullet
             Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
             elapsedTime = 0.0f;
@@ -209,7 +226,8 @@ public class SimpleFSM : FSM {
     /// Check the collision with the bullet
     /// </summary>
     /// <param name="collision"></param>
-    void OnCollisionEnter(Collision collision) {
+    void OnCollisionEnter(Collision collision)
+    {
         //Reduce health
         if (collision.gameObject.tag == "Bullet")
             health -= collision.gameObject.GetComponent<Bullet>().damage;
@@ -218,7 +236,8 @@ public class SimpleFSM : FSM {
     /// <summary>
     /// Find the next semi-random patrol point
     /// </summary>
-    protected void FindNextPoint() {
+    protected void FindNextPoint()
+    {
         print("Finding next point");
         int rndIndex = Random.Range(0, pointList.Length);
         float rndRadius = 10.0f;
@@ -228,7 +247,8 @@ public class SimpleFSM : FSM {
 
         //Check Range
         //Prevent to decide the random point as the same as before
-        if (IsInCurrentRange(destPos)) {
+        if (IsInCurrentRange(destPos))
+        {
             rndPosition = new Vector3(Random.Range(-rndRadius, rndRadius), 0.0f, Random.Range(-rndRadius, rndRadius));
             destPos = pointList[rndIndex].transform.position + rndPosition;
         }
@@ -238,7 +258,8 @@ public class SimpleFSM : FSM {
     /// Check whether the next random position is the same as current tank position
     /// </summary>
     /// <param name="pos">position to check</param>
-    protected bool IsInCurrentRange(Vector3 pos) {
+    protected bool IsInCurrentRange(Vector3 pos)
+    {
         float xPos = Mathf.Abs(pos.x - transform.position.x);
         float zPos = Mathf.Abs(pos.z - transform.position.z);
 
@@ -248,10 +269,12 @@ public class SimpleFSM : FSM {
         return false;
     }
 
-    protected void Explode() {
+    protected void Explode()
+    {
         float rndX = Random.Range(10.0f, 30.0f);
         float rndZ = Random.Range(10.0f, 30.0f);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
+        {
             rigidbody.AddExplosionForce(10000.0f, transform.position - new Vector3(rndX, 10.0f, rndZ), 40.0f, 10.0f);
             rigidbody.velocity = transform.TransformDirection(new Vector3(rndX, 20.0f, rndZ));
         }

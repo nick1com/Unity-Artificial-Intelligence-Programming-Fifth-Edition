@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Serialization;
 
 public class Bullet : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class Bullet : MonoBehaviour
     private float speed = 600.0f;
     [SerializeField]
     private float lifeTime = 3.0f;
-   
+
     public int damage = 50;
 
     void Start()
@@ -21,8 +19,8 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        transform.position += 
-			transform.forward * speed * Time.deltaTime;       
+        transform.position +=
+            transform.forward * speed * Time.deltaTime;
     }
 
     void OnCollisionEnter(Collision collision)

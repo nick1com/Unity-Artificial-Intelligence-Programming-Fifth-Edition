@@ -1,7 +1,6 @@
 using UnityEngine;
-using System.Collections;
 
-public class NPCTankController : AdvancedFSM 
+public class NPCTankController : AdvancedFSM
 {
     public GameObject Bullet;
     private int health;
@@ -70,9 +69,9 @@ public class NPCTankController : AdvancedFSM
         CurrentState.RunState(playerTransform, transform);
     }
 
-    public void SetTransition(Transition t) 
-    { 
-        PerformTransition(t); 
+    public void SetTransition(Transition t)
+    {
+        PerformTransition(t);
     }
 
     private void ConstructFSM()
@@ -82,7 +81,7 @@ public class NPCTankController : AdvancedFSM
 
         Transform[] waypoints = new Transform[pointList.Length];
         int i = 0;
-        foreach(GameObject obj in pointList)
+        foreach (GameObject obj in pointList)
         {
             waypoints[i] = obj.transform;
             i++;

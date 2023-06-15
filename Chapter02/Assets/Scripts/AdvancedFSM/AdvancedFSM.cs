@@ -1,6 +1,5 @@
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// This class is adapted and modified from the FSM implementation class available on UnifyCommunity website
@@ -28,7 +27,7 @@ public enum FSMStateID
     Dead,
 }
 
-public class AdvancedFSM : FSM 
+public class AdvancedFSM : FSM
 {
     private List<FSMState> fsmStates;
 

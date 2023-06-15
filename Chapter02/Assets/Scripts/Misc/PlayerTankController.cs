@@ -1,8 +1,7 @@
 using UnityEngine;
-using System.Collections;
-using UnityEngine.Serialization;
 
-public class PlayerTankController : MonoBehaviour {
+public class PlayerTankController : MonoBehaviour
+{
     public GameObject bullet;
     public GameObject turret;
     public GameObject bulletSpawnPoint;
@@ -15,17 +14,20 @@ public class PlayerTankController : MonoBehaviour {
 
     private float elapsedTime;
 
-    void OnEndGame() {
+    void OnEndGame()
+    {
         // Don't allow any more control changes when the game ends
         this.enabled = false;
     }
 
-    void Update() {
+    void Update()
+    {
         UpdateControl();
         UpdateWeapon();
     }
 
-    void UpdateControl() {
+    void UpdateControl()
+    {
         //AIMING WITH THE MOUSE
         // Generate a plane that intersects the transform's position with an upwards normal.
         Plane playerPlane = new Plane(Vector3.up, transform.position + new Vector3(0f, 0f, 0f));
@@ -36,7 +38,8 @@ public class PlayerTankController : MonoBehaviour {
         // Determine the point where the cursor ray intersects the plane.
 
         // If the ray is parallel to the plane, Raycast will return false.
-        if (playerPlane.Raycast(rayCast, out var hitDist)) {
+        if (playerPlane.Raycast(rayCast, out var hitDist))
+        {
             // Get the point along the ray that hits the calculated distance.
             Vector3 rayHitPoint = rayCast.GetPoint(hitDist);
 
@@ -44,20 +47,25 @@ public class PlayerTankController : MonoBehaviour {
             turret.transform.rotation = Quaternion.Slerp(turret.transform.rotation, targetRotation, Time.deltaTime * turretRotSpeed);
         }
 
-        if (Input.GetKey(KeyCode.W)) {
+        if (Input.GetKey(KeyCode.W))
+        {
             targetSpeed = maxForwardSpeed;
         }
-        else if (Input.GetKey(KeyCode.S)) {
+        else if (Input.GetKey(KeyCode.S))
+        {
             targetSpeed = maxBackwardSpeed;
         }
-        else {
+        else
+        {
             targetSpeed = 0f;
         }
 
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKey(KeyCode.A))
+        {
             transform.Rotate(0f, -rotSpeed * Time.deltaTime, 0f);
         }
-        else if (Input.GetKey(KeyCode.D)) {
+        else if (Input.GetKey(KeyCode.D))
+        {
             transform.Rotate(0f, rotSpeed * Time.deltaTime, 0f);
         }
 
@@ -66,10 +74,13 @@ public class PlayerTankController : MonoBehaviour {
         transform.Translate(Vector3.forward * Time.deltaTime * curSpeed);
     }
 
-    void UpdateWeapon() {
+    void UpdateWeapon()
+    {
         elapsedTime += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0)) {
-            if (elapsedTime >= shootRate) {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (elapsedTime >= shootRate)
+            {
                 //Reset the time
                 elapsedTime = 0.0f;
 

@@ -1,9 +1,8 @@
 using UnityEngine;
-using System.Collections;
 
 public class DeadState : FSMState
 {
-    public DeadState() 
+    public DeadState()
     {
         stateID = FSMStateID.Dead;
     }

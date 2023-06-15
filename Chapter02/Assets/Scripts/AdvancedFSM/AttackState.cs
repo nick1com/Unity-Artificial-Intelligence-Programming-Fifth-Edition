@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class AttackState : FSMState
 {
@@ -8,8 +7,8 @@ public class AttackState : FSMState
     private float curRotSpeed = 1.0f;
     private float curSpeed = 100.0f;
 
-    public AttackState(Transform[] wp) 
-    { 
+    public AttackState(Transform[] wp)
+    {
         waypoints = wp;
         stateID = FSMStateID.Attacking;
         curRotSpeed = 1.0f;
@@ -40,7 +39,7 @@ public class AttackState : FSMState
         {
             Debug.Log("Switch to Patrol State");
             npc.GetComponent<NPCTankController>().SetTransition(Transition.LostPlayer);
-        }  
+        }
     }
 
     public override void RunState(Transform player, Transform npc)
@@ -60,7 +59,8 @@ public class AttackState : FSMState
     /// <summary>
     /// Find the next semi-random patrol point
     /// </summary>
-    public void FindNextPoint() {
+    public void FindNextPoint()
+    {
         //Debug.Log("Finding next point");
         int rndIndex = Random.Range(0, waypoints.Length);
         Vector3 rndPosition = Vector3.zero;

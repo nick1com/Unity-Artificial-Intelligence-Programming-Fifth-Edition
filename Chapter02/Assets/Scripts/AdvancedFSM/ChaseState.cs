@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class ChaseState : FSMState
 {
@@ -7,8 +6,8 @@ public class ChaseState : FSMState
     private float curRotSpeed = 1.0f;
     private float curSpeed = 100.0f;
 
-    public ChaseState(Transform[] wp) 
-    { 
+    public ChaseState(Transform[] wp)
+    {
         stateID = FSMStateID.Chasing;
     }
 

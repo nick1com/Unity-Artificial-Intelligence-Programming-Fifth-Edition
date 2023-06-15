@@ -1,16 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class FSM : MonoBehaviour
+public class NicksFSM : MonoBehaviour
 {
 
     protected virtual void Initialize() { }
     protected virtual void FSMUpdate() { }
     protected virtual void FSMFixedUpdate() { }
 
-    // Use this for initialization
+
+
+
+
+
+    // Start is called before the first frame update
     void Start()
     {
-        Initialize();
+        Initialize();        
     }
 
     // Update is called once per frame
@@ -21,6 +28,8 @@ public class FSM : MonoBehaviour
 
     void FixedUpdate()
     {
-        FSMFixedUpdate();
+        FSMFixedUpdate();    
     }
+
+
 }

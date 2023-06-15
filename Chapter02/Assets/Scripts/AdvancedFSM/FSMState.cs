@@ -1,6 +1,5 @@
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// This class is adapted and modified from the FSM implementation class available on UnifyCommunity website
@@ -85,7 +84,7 @@ public abstract class FSMState
             return map[trans];
         }
 
-        Debug.LogError("FSMState ERROR: " + trans+ " Transition passed to the State was not on the list");
+        Debug.LogError("FSMState ERROR: " + trans + " Transition passed to the State was not on the list");
         return FSMStateID.None;
     }
 
